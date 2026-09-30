@@ -1,7 +1,7 @@
 {
-  "slug": "app-template",
-  "title": "App template",
-  "description": "A tally that remembers where you left it: the smallest Collegica app, and the starting point for every other.",
+  "slug": "owl-sessions",
+  "title": "OWL Sessions",
+  "description": "Thirty, forty-five or sixty minutes of exercise from a library of seventeen moves, each shown with a timer and a rep count, with a minute of rest between blocks.",
   "privacy": "Nothing leaves the tab.",
   "origins": [],
   "embed": "component"

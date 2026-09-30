@@ -31,7 +31,21 @@ createServer(async (req, res) => {
   }
   try {
     const body = await readFile(file);
-    res.writeHead(200, { 'Content-Type': TYPES[extname(file)] ?? 'application/octet-stream', 'Cache-Control': 'no-store' });
+    const headers = { 'Content-Type': TYPES[extname(file)] ?? 'application/octet-stream', 'Cache-Control': 'no-store', 'Accept-Ranges': 'bytes' };
+    // Safari plays video only from servers that answer byte ranges.
+    const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range ?? '');
+    if (range) {
+      const start = range[1] === '' ? Math.max(0, body.length - Number(range[2])) : Number(range[1]);
+      const end = range[1] !== '' && range[2] !== '' ? Math.min(Number(range[2]), body.length - 1) : body.length - 1;
+      if (start > end || start >= body.length) {
+        res.writeHead(416, { 'Content-Range': `bytes */${body.length}` }).end();
+        return;
+      }
+      res.writeHead(206, { ...headers, 'Content-Range': `bytes ${start}-${end}/${body.length}` });
+      res.end(body.subarray(start, end + 1));
+      return;
+    }
+    res.writeHead(200, headers);
     res.end(body);
   } catch {
     res.writeHead(404).end('Not found');

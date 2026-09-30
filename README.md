@@ -1,73 +1,65 @@
-# App template
+# OWL Sessions
 
-The starting point for every [Collegica](https://www.collegica.org) app: a
-small tool that runs in a browser tab, on its own or inside a page on
-collegica.org, with nothing uploaded.
+Thirty, forty-five or sixty minutes of exercise from a library of seventeen
+moves, each shown as a clip under a timer and a rep count, with a minute of
+rest between blocks. It runs in a browser tab: no account, no upload.
 
-The example app is a tally that remembers its count. Replace it with yours.
+It is the muscle tool of the OWL framework (Optimal Wealth and Longevity),
+beside [OWL Planner](https://github.com/Collegica/owl-planner) for money. The
+method behind it is in
+[A Session You Can Keep](https://www.collegica.org/aging-well/exercise-sessions/).
 
-## Start an app
+**Next:** an AI coach that builds today's session from a check-in — built
+here in the open, one pull request per lesson of a Collegica course.
 
-1. On GitHub, **Use this template** → create `Collegica/<slug>` (or your own
-   copy under your account).
-2. Rename it, once:
-
-   ```bash
-   npm run rename -- my-app "My App"
-   ```
-
-   The slug is the app's name everywhere: the custom element `<my-app>`, the
-   path `/apps/my-app/` on collegica.org, the storage prefix
-   `collegica:my-app:` and the release file `my-app-web.tar.gz`. It must
-   contain a hyphen, because custom element names do.
-3. Write the app in `src/app.js`, and fill in `app.json`: the description, and
-   the privacy line that tells people where their data goes.
-
-## Run and test
+## Run it
 
 Node 22, nothing to install.
 
 ```bash
 npm start          # http://localhost:8000/
-npm test           # the embedding contract and the unit tests
-npm run build      # dist/<slug>-web.tar.gz
+npm test           # the plans, the library, and the embedding contract
 ```
 
-## How it fits on collegica.org
+`?start=30` (or `45`, `60`) opens straight into a session; `&at=N` jumps to
+step N.
 
-The site's `website/apps.yml` pins each app's release. On every deploy the
-site downloads that release and unpacks it into `/apps/<slug>/app/`:
+## What's here
 
-| Address | What it is |
+| Path | What it is |
 |---|---|
-| `/apps/<slug>/` | A page on the site: navigation, the article around the app, and the app itself placed as `<slug>` from `app/src/app.js` |
-| `/apps/<slug>/app/` | This repository's `index.html`: the app full-screen, which is what installs to a phone's home screen and works offline |
+| `src/app.js` | The `<owl-sessions>` element: the screen, the clock, the sounds |
+| `src/timeline.js` | The session as steps, the clock format and the rep count — pure, tested |
+| `src/moves.js` | The library: each move's name, family, cue, and tempo (seconds per rep) or `hold` |
+| `src/plans.js` | The 30, 45 and 60 minute sessions, as blocks of moves with working seconds |
+| `clips/` | One ten-second clip per move, re-encoded for the web (8 MB) |
+| `images/rest.jpg` | Shown during the minute of rest |
+| `library/` | How the clips were made: the prompts, `fetch.sh`, and a contact sheet per clip |
+| `test/timeline.test.mjs` | Every plan lasts exactly its stated length, every move is in the library |
 
-The app inherits the site's colours and dark mode through the `--cg-*` CSS
-custom properties; standalone, `src/tokens.css` supplies the same ones.
+## The clips
 
-## The contract
+The demonstrator is generated, not filmed. Each clip was made from the
+prompts in `library/prompts.json` and checked by a person against the
+exercise from the contact sheets in `library/sheets/` (two frames a second). A
+trainer has not checked them. The details, and the moves that took more
+than one try, are in [`library/README.md`](library/README.md).
 
-`npm test` checks that the app keeps to the rules that let many apps share one
-site: its element is named for its slug, its paths are relative, it talks to
-no other site unless `app.json` declares it, it stores data only under its own
-name, and it adds no page-wide keyboard, wheel or touch handlers. The details,
-and how to work in this repository with a coding assistant, are in
-[`AGENTS.md`](AGENTS.md).
+## On collegica.org
 
-## Release
+Started from [Collegica/app-template](https://github.com/Collegica/app-template),
+so it keeps the same contract: its own path, its own storage names, no
+requests to other sites, no page-wide input handlers. A release attaches
+`owl-sessions-web.tar.gz`; the site serves the version it pins at
+`/apps/owl-sessions/`. Working in this repository with a coding assistant:
+see [`AGENTS.md`](AGENTS.md).
 
-Publish a GitHub release tagged `vMAJOR.MINOR.PATCH`. The release workflow
-tests, builds and attaches `<slug>-web.tar.gz`. It goes live on collegica.org
-when the site pins the new tag.
+## History
 
-## Known gaps
-
-- **iPhone home-screen icon.** iOS ignores SVG icons in the manifest. Add a
-  180 × 180 PNG and `<link rel="apple-touch-icon" href="icon-180.png">` to
-  `index.html` (and to `BUNDLE` in `scripts/bundle.mjs`).
-- **No browser tests yet.** The contract is checked by reading the files;
-  nothing yet clicks through the app in a real browser in CI.
+Moved on 2026-09-29 from Collegica's private site repository, where it was
+built in pull requests #68, #71, #72, #74, #75 and #76 (September 13–14,
+2026), the first of them co-authored with Claude. The commits there were
+not carried over; this repository starts from the app as it was then.
 
 ## License
 

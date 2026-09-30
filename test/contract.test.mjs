@@ -42,9 +42,11 @@ test('every path stays inside the app\'s folder', () => {
 
 test('no requests to other sites, unless declared in app.json "origins"', () => {
   const allowed = new Set(meta.origins);
+  // Plain links (<a href>) are not requests and are fine.
   const urls = [
-    /(['"`])(https?:\/\/[^'"`\s]+)\1/g,                          // string literals
-    /(?:src|href|action)\s*=\s*(["'])(https?:\/\/[^"']+)\1/g,    // HTML attributes
+    /(?<!href=)(['"`])(https?:\/\/[^'"`\s]+)\1/g,                // string literals
+    /(?:src|action|poster|data)\s*=\s*(["'])(https?:\/\/[^"']+)\1/g, // HTML attributes that load
+    /<link\b[^>]*\bhref\s*=\s*(["'])(https?:\/\/[^"']+)\1/g,     // stylesheets, preloads, icons
     /url\(\s*(["']?)(https?:\/\/[^"')]+)\1\s*\)/g,               // CSS
   ];
   for (const f of textFiles) {

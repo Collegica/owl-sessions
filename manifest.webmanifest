@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "App template",
-  "short_name": "App template",
+  "name": "OWL Sessions",
+  "short_name": "OWL Sessions",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-export const BUNDLE = ['index.html', 'manifest.webmanifest', 'sw.js', 'icon.svg', 'app.json', 'src'];
+export const BUNDLE = ['index.html', 'manifest.webmanifest', 'sw.js', 'icon.svg', 'app.json', 'src', 'clips', 'images'];
 
 /** Every file in the bundle, as paths relative to the repository root. */
 export function bundleFiles() {
