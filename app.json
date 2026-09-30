@@ -1,0 +1,8 @@
+{
+  "slug": "app-template",
+  "title": "App template",
+  "description": "A tally that remembers where you left it: the smallest Collegica app, and the starting point for every other.",
+  "privacy": "Nothing leaves the tab.",
+  "origins": [],
+  "embed": "component"
+}

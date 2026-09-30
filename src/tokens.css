@@ -1,0 +1,42 @@
+/* Collegica's tokens, for running the app on its own. On collegica.org the
+   site defines these and this file is not loaded. Values from the site's
+   theme.scss (paper) and theme-dark.scss (night). */
+
+:root {
+  --cg-surface: #FBFAF7;
+  --cg-surface-2: #F4F2ED;
+  --cg-text: #1E2333;
+  --cg-text-muted: #4C5782;
+  --cg-brand: #3A4366;
+  --cg-line: #E2E5EE;
+  --cg-accent: #C97B1E;
+  --cg-accent-text: #8F5410;
+  --cg-btn-bg: #3A4366;
+  --cg-btn-fg: #FBFAF7;
+  --cg-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --cg-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cg-surface: #131725;
+    --cg-surface-2: #1B2035;
+    --cg-text: #E4E6EF;
+    --cg-text-muted: #A8AFC8;
+    --cg-brand: #A9B2D4;
+    --cg-line: #2A3149;
+    --cg-accent: #E9A33F;
+    --cg-accent-text: #E9A33F;
+    --cg-btn-bg: #A9B2D4;
+    --cg-btn-fg: #131725;
+  }
+}
+
+html, body { margin: 0; }
+body {
+  background: var(--cg-surface);
+  color: var(--cg-text);
+  font: 1.0625rem/1.65 var(--cg-sans);
+}
+main { max-width: 48rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }

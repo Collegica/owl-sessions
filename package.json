@@ -1,0 +1,15 @@
+{
+  "name": "app-template",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "The starting point for every Collegica app: a web component, a standalone page, offline support and the embedding contract, with no dependencies.",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "rename": "node scripts/rename.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

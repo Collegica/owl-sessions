@@ -1,0 +1,29 @@
+name: Release
+
+# Publishing a GitHub release attaches <slug>-web.tar.gz to it. collegica.org
+# serves the version pinned in its website/apps.yml, so a release goes live
+# only when that pin is bumped there.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - name: Build and attach the bundle
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          npm run build -- "$TAG"
+          slug=$(node -p "require('./app.json').slug")
+          gh release upload "$TAG" "dist/${slug}-web.tar.gz" --clobber
