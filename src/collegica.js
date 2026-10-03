@@ -57,6 +57,9 @@ export const baseStyles = `
     line-height: 1.5;
   }
   :host([hidden]) { display: none; }
+  /* The page's own reset (Bootstrap's on collegica.org) doesn't reach the shadow
+     root, so a rule that sets display would otherwise show [hidden] elements. */
+  [hidden] { display: none !important; }
   * { box-sizing: border-box; }
   h1, h2, h3 { font-family: var(--cg-serif, Georgia, serif); font-weight: 400; color: var(--cg-brand, #3A4366); margin: 0 0 .5em; }
   button {
